@@ -1,5 +1,6 @@
 # Titre du Devoir
 ## Auteur(e.s)
 
-Inclure les instructions pour installer et utiliser votre projet ainsi
-qu'une brève description du devoir et des méthodes utilisés dans le code.
+Inclure une brève description du devoir et des méthodes utilisés dans le code.
+
+Note: Voir l'énoncé du devoir dans le dossier [latex](latex).
