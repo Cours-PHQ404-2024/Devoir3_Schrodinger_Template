@@ -1,3 +1,4 @@
 numpy>=1.26.2
 pytest>=7.4.3
 git+https://github.com/JeremieGince/TPAutoCorrect
+scipy>=1.11.4
