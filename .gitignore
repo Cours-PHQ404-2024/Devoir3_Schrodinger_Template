@@ -297,3 +297,4 @@ tests/tmp
 report_dir
 auxil
 latex/*.gz
+documents/*.gz
