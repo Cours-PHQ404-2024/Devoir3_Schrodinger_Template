@@ -1,14 +1,86 @@
 \documentclass[12pt, letterpaper]{article}
 
+%-----------------------------------------
+% Frame du document
+%-----------------------------------------
+\usepackage[margin=2.5cm]{geometry}  % Définit les dimensions des marges
 \usepackage{amsmath, amssymb}
-\usepackage{physics}
 \usepackage[french]{babel}
-\usepackage[margin=2.5cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{hyperref}
-\usepackage{caption}
-\usepackage{graphicx}
+\usepackage{helvet}
+
+%-----------------------------------------
+% Core
+%-----------------------------------------
+\usepackage{fancyhdr}           % Numérotation des pages, headers
+\fancyhf{}
+\usepackage{hyperref}           % Références hypertexte
+\usepackage{booktabs,multirow,hhline}        % Tableaux
+\usepackage{graphicx}           % Figures
+\usepackage{subfig,wrapfig,caption}        % Sous-figures, ancrées, mise en forme des captions
+\usepackage{titlesec}            % Mise en forme des sections
+\usepackage{enumitem}           % Personnaliser les énumérations
+\usepackage{color}            % Texte de couleur
+\usepackage[dvipsnames]{xcolor}         % Plus de couleurs funky
+\usepackage{textcomp}
+\usepackage{lastpage}
+
+%-----------------------------------------
+% Math
+%-----------------------------------------
+\usepackage{amsmath,amssymb,amsthm,nicefrac}      % Symboles et versatilité mathématique
+\usepackage{mathrsfs}           % ¯\_(ツ)_/¯ Polices d'écriture en math
+\usepackage{wasysym,marvosym}         % Autres symboles math
+\usepackage{mathtools}           % Peaufine la configuration des équations (when used)
+\usepackage{dsfont}
+
+%-----------------------------------------
+% Physique
+%-----------------------------------------
+\usepackage{tikz}            % Dessine des figures
+%\usepackage[american]{circuitikz}         % Dessine des schémas de circuits électroniques
+\usetikzlibrary{quantikz}
+
+\usepackage{verbatim}           % Je l'utilise pour écrire en verbatim et pour les commentaires
+%\usepackage{minted}           % Ajoute du langage de prog élégamment
+\usepackage{lipsum}            % Génère le lorem ispum
+\usepackage{siunitx}            % Unités du système international avec \si
+\usepackage{cancel}
+\usepackage{todonotes}
+\usepackage{empheq}
+\usepackage{physics}
+% \usepackage{bm}% Your new best friend in LaTeX
+% http://ctan.math.ca/tex-archive/macros/latex/contrib/physics/physics.pdf      La documentation dudit merveilleux package
+
+\usepackage{float}
+
+\usepackage{halloweenmath} % décorations d'halloween pour vos devoirs (J'encourage l'utilisation de la sorcière mathémagique avec \mathwitch )
+
+\def\CQFD{\begin{flushright}CQFD.\end{flushright}}
+\def\RANCHITUP{\begin{flushright}CQFD.\end{flushright}}
+\def\PIFPAF{\begin{flushright}CQFD.\end{flushright}}
+% \RANCHITUP ou \PIFPAF pour écrire un CQFD bien placé
+
+\newcommand{\uvec}[1]{\boldsymbol{\hat{\textbf{#1}}}}
+\newcommand{\uveci}{{\bm{\hat{\textnormal{\bfseries\i}}}}}
+\newcommand{\uvecj}{{\bm{\hat{\textnormal{\bfseries\j}}}}}
+% Beaux vecteurs unitaires avec \uvec
+
+
+\newcommand{\del}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\delp}[1]{\frac{\partial }{\partial #1}}
+\newcommand{\ddfrac}[2]{\frac{\dd #1}{\dd #2}}
+\newcommand{\ddfracp}[1]{\frac{\dd }{\dd #1}}
+\newcommand{\braAket}[3]{\left<#1\left|#2\right|#3\right>}
+
+
+%-----------------------------------------
+% Références
+%-----------------------------------------
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\numberwithin{equation}{section}
 
 \begin{document}
 
@@ -28,7 +100,7 @@ Ces méthodes sont présentées au chapitre 12 des notes de David Sénéchal.
 
 \noindent Vous devez cloner le répertoire github dans l'organisation du cours au lien suivant :\\
 \href{https://classroom.github.com/a/eH84M6i-}{https://classroom.github.com/a/eH84M6i-}.
-Dans ce répertoire se trouvera votre code python, vos tests unitaires ainsi que votre rapport
+Dans ce répertoire se trouvera votre code python, vos tests unitaires ainsi que votre readme
 décrivant les méthodes utilisés et l'analyse de vos résultats.
 La structure des fichiers ne doit pas être modifiée, mais vous pouvez ajouter des fichiers si vous le désirez.
 Voici la structure de fichiers que votre répertoire devra garder :
@@ -58,7 +130,6 @@ Voici la structure de fichiers que votre répertoire devra garder :
   \item[$\hookrightarrow$] \texttt{.gitignore}
   \item[$\hookrightarrow$] \texttt{requirements.txt}
   \item[$\hookrightarrow$] \texttt{README.md}
-  \item[$\hookrightarrow$] \texttt{rapport\_devoir\emph{i}-\emph{vos\_noms}.pdf}
 \end{itemize}
 
 \bigskip
@@ -66,8 +137,7 @@ Voici la structure de fichiers que votre répertoire devra garder :
 \noindent Le fichier \texttt{requirements.txt} doit contenir les dépendances de votre projet.
 Le fichier \\\texttt{README.md} doit contenir les instructions pour installer et utiliser votre projet ainsi
 qu'une brève description du devoir et des méthodes utilisés dans le code.
-Le fichier \\\texttt{rapport\_devoir\emph{i}-\emph{vos\_noms}.pdf} doit contenir votre rapport en format pdf.
-L'utilisation de \LaTeX\ est fortement recommandée pour la rédaction de votre rapport.
+Voir la section~\ref{sec:Readme} pour plus de détails.
 Dans le dossier \texttt{src} se trouvera votre code python et dans le dossier \texttt{tests} se trouvera vos tests
 unitaires.
 
@@ -150,11 +220,49 @@ Il faut ajouter des tests unitaires dans le dossier \texttt{tests} afin d'augmen
 mais les tests déjà implémentés ne doivent pas être modifiés.
 
 
+\section{Readme}\label{sec:Readme}
+
+\noindent Vous devez faire un fichier Readme qui explique ce que contient votre répertoire et comment l'utiliser.
+Le Readme sera divisé en 2 parties: une partie plus courte qui consiste essentiellement à ce qu'on retrouve normalement
+dans Readme scientifique et une partie plus longue qui consiste en une présentation et analyse des résultats.
+
+\bigskip
+
+\noindent La première partie doit contenir les éléments suivants:
+\begin{itemize}
+    \item Une brève description du contenue du répertoire;
+    \item Une figure qui résume le contenu du répertoire ainsi que les résultats principaux;
+    \item Les instructions pour installer et utiliser votre projet.
+\end{itemize}
+Il faut qu'un utilisateur externe soit en mesure de regarder la première partie du Readme et comprendre en quelques
+secondes le contenu du répertoire, les résultats principaux et comment utiliser le projet.
+C'est important d'être concis, clair et efficace.
+Pour la figure, il sagit d'une image permettant au lecteur de comprendre rapidement le contenu du répertoire.
+Celle-ci pourrait être, par exemple, un diagramme représentant le pipeline de traitement des données, un graphique
+comparant les différentes méthodes implémentées, etc.
+
+\bigskip
+
+\noindent Le deuxième partie doit contenir les éléments suivants:
+\begin{itemize}
+    \item Une plus longue description du contenu du répertoire;
+    \item Une présentation et explication des méthodes utilisées;
+    \item Une présentation des résultats obtenus;
+    \item Une analyse des résultats obtenus;
+    \item Une conclusion.
+\end{itemize}
+Cette seconde partie sert à expliquer en quoi consiste ce dépôt si l'utilisateur décidait que la première partie
+du Readme était assez intéressante et bien présentée pour qu'il veuille en savoir plus.
+Il sagit ici d'un court rapport scientifique.
+Il faut donc rester concis afin d'être lu en quelques minutes seulement, mais mettre suffisamment d'information pour
+que l'utilisateur comprenne bien la théorie, les méthodes et les résultats.
+
+
 \section{Critères d'évaluation}\label{sec:criteres-d'evaluation}
 
 \begin{description}
-  \item[70 points] Pour le résultat obtenue à l'aide du module TAC\@.
-  \item[30 points] Pour la qualité du rapport.
+  \item[70 points] Pour le résultat de l'autocorrection du code obtenue à l'aide du module TAC\@.
+  \item[30 points] Pour la qualité du Readme.
 \end{description}
 
 
